@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link href="https://canvasjs.com/assets/css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
+<script>
+window.onload = function () {
+var d=[];
+for(var i=1;i<=6;i++){
+d.push(i);
+}
+var holiday=[2,2,2];
+var hour=[8,9,10];
+hour.push.apply(hour,holiday);
+var colors=["green","green","green"];
+var colr=["red","red","red"];
+
+colors.push.apply(colors,colr);
+var name=["present","present","present"];
+var nm=["Holiday","Holiday","Holiday"];
+name.push.apply(name,nm);
+var taskArray = [];
+
+for(var i=0;i<d.length;i++){
+var item ={};
+        item ["x"]=d[i];
+        item ["y"] = hour[i];
+        item["name"]=name[i];
+
+        taskArray.push(item);
+ 
+
+}
+
+CanvasJS.addColorSet("greenShades",colors);
+var options1 = {
+	animationEnabled: true,
+    colorSet: "greenShades",
+	title: {
+		text: "Current Month Attendence "
+	},axisX:{
+        title: "No of Days",
+      interval: 1,
+        maximum:31,
+        minimum:0
+      },
+      axisY:{
+        title: "No of Hours",
+      interval: 2,
+        maximum:18,
+        minimum:0
+      },
+      
+      
+
+	data: [{
+		type: "column", //change it to line, area, bar, pie, etc
+		legendText: "Try Resizing with the handle to the bottom right",
+		showInLegend: true,
+          toolTipContent: "No of Days :{x} Hours :{y} {name}",
+
+		dataPoints: taskArray
+		}]
+};
+
+$("#resizable").resizable({
+	create: function (event, ui) {
+		//Create chart.
+		$("#chartContainer1").CanvasJSChart(options1);
+	},
+	resize: function (event, ui) {
+		//Update chart size according to its container size.
+		$("#chartContainer1").CanvasJSChart().render();
+	}
+});
+
+}
+</script>
+</head>
+<body>
+<div id="resizable" style="height: 370px;border:1px solid gray;">
+	<div id="chartContainer1" style="height: 100%; width: 100%;"></div>
+</div>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery-ui.1.11.2.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>
